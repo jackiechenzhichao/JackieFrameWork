@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XLua;
+using System.IO;
 
 namespace JackieFrame
 {
@@ -21,6 +22,7 @@ namespace JackieFrame
             {
                 string path = "";
 #if UNITY_EDITOR
+                path = $"{Application.dataPath}/Lua/"; 
 # endif
                 return path;
             }
@@ -34,29 +36,39 @@ namespace JackieFrame
                 luaEnv.AddLoader(LuaLoader1);
                 luaEnv.AddLoader(LuaLoader2);
             }
-
-            
-
-            DoLua("print('Helllo World !')");
         }
 
         /// <summary>
         /// 执行lua代码
         /// </summary>
         /// <param name="luaName"></param>
-        public void DoLua(string luaName) 
+        public void DoLuaFile(string luaName) 
         {
-            luaEnv.DoString(luaName);
+            string str = string.Format("require('{0}')", luaName);
+            if (luaEnv ==null) 
+            {
+                Debug.LogError("LuaEnv未初始化");
+                return;
+            }
+            luaEnv.DoString(str);
         }
 
         /// <summary>
         /// lua加载路径重定向
         /// </summary>
-        /// <param name="_path"></param>
+        /// <param name="luaName"></param>
         /// <returns></returns>
-        private byte[] LuaLoader1(ref string _path) 
+        private byte[] LuaLoader1(ref string luaName) 
         {
-
+            string luaFile = luaPath + luaName + ".lua";
+            if (File.Exists(luaFile)) 
+            {
+                return File.ReadAllBytes(luaFile);
+            }
+            else 
+            {
+                Debug.Log("重定向失败，文件名为：" + luaName);
+            }
             return null;
         }
 

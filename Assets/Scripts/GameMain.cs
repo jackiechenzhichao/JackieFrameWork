@@ -9,6 +9,7 @@ namespace JackieFrame
         private void Awake()
         {
             LuaMgr.instance.Init();
+            LuaMgr.instance.DoLuaFile("Main");
         }
     }
 }
