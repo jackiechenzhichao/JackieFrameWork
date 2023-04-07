@@ -33,7 +33,7 @@ public class ABMgr : MonoSingleton<ABMgr>
     {
         get
         {
-            return Application.streamingAssetsPath + "/";
+            return Application.streamingAssetsPath + "/PC/";
         }
     }
 

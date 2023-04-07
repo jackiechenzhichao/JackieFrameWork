@@ -1,0 +1,11 @@
+{
+    "files.watcherExclude": {
+        "**/*.meta/**": true
+    },
+    "files.exclude": {
+        "**/.meta": true
+    },
+    "search.exclude": {
+        "**/*.meta": true
+    }
+}
